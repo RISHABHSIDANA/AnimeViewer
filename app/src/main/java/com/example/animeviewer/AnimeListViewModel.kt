@@ -5,13 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class AnimeListViewModel : ViewModel() {
     private val _animeList = MutableLiveData<List<Anime>>()
     val animeList: LiveData<List<Anime>> = _animeList
-    private val _currAnime = MutableLiveData<Anime>()
-    val anime: LiveData<Anime> = _currAnime
+    private val _currAnime = MutableSharedFlow<Anime>()
+    val anime: SharedFlow<Anime> = _currAnime
 
     init {
         observeAnime()
@@ -30,7 +32,7 @@ class AnimeListViewModel : ViewModel() {
         }
     }
 
-    private fun sendEvent(it: Anime) = _currAnime.postValue(it)
+    private fun sendEvent(it: Anime) = viewModelScope.launch { _currAnime.emit(it) }
 
     companion object {
         const val TAG = "AnimeListViewModel"
