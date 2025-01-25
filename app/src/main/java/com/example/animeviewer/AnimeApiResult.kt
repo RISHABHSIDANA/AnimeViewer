@@ -53,11 +53,11 @@ data class Jpg(
 
 data class Trailer(
     @SerializedName("embed_url")
-    val embedUrl: String
+    val embedUrl: String?
 )
 
 data class AnimeDetails(
-    val url: String,
+    val videoUrl: String,
     val title: String,
     val synopsis: String,
     val genres: List<String>,

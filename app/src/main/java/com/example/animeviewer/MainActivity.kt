@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewModel.anime.collect {
                 val clickedAnimeDetail = AnimeDetails(
-                    it.trailer.embedUrl,
+                    it.trailer.embedUrl ?: "",
                     it.title,
                     it.synopsis,
                     it.genres.map { genre -> genre.name },

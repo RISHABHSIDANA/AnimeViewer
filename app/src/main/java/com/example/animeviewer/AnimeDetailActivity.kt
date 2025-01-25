@@ -8,7 +8,6 @@ import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.animeviewer.databinding.AnimeDetailActivityBinding
-import com.example.animeviewer.databinding.AnimeListActivityBinding
 
 class AnimeDetailActivity : ComponentActivity() {
     private lateinit var binding: AnimeDetailActivityBinding
@@ -32,14 +31,15 @@ class AnimeDetailActivity : ComponentActivity() {
         val imageView = binding.imageAnimePoster
         webView.settings.javaScriptEnabled = true
 
-        if (animeDetails.url != null) {
+        if (animeDetails.videoUrl != "") {
             webView.visibility = View.VISIBLE
             imageView.visibility = View.GONE
-            webView.loadUrl(animeDetails.url)
+            webView.loadUrl(animeDetails.videoUrl)
         } else {
+            Log.i(TAG, "onCreate loading image")
             webView.visibility = View.GONE
             imageView.visibility = View.VISIBLE
-            Glide.with(this)
+            Glide.with(binding.root.context)
                 .load(animeDetails.imageUrl).into(imageView)
         }
     }
